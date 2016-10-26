@@ -24,8 +24,8 @@ class METWeather:
         
     def get_weather(self):
         if (self.weatherLocationName == 'Amesbury'):
-            weather_url = 'http://boncester.serveftp.com/projects/jarvis/getWeather.php'
-            #weather_url = 'http://127.0.0.1/getWeather.php'
+            #weather_url = 'http://boncester.serveftp.com/projects/jarvis/getWeather.php'
+            weather_url = 'http://127.0.0.1/getWeather.php'
         if not weather_url:
             self.return_error("Weather URL is an empty string")
             return false 
@@ -33,13 +33,6 @@ class METWeather:
         response = urlopen(weather_url)
         data = response.read().decode("utf-8")
         weather_data = json.loads(data)
-
-        # there was a issue that 'just went away' with the old get response way (underneath)
-        # so keeping the old way around in case it reappears and needs debugging
-        #response = urllib.urlopen(weather_url)
-        #weather_data = json.loads(response.read())
-        #weather_json = response.read()
-        #weather_data = json.loads(weather_json)
 
         for weather_dataKey, weather_dataValue in weather_data.items():
             if weather_dataKey == "System":
@@ -64,7 +57,7 @@ class METWeather:
 
         todays_date = time.strftime("%Y-%m-%dZ")
 
-        for day in self.temporary_weather['Days']:
+        for day in sorted(self.temporary_weather['Days']):
             if day.upper() == todays_date:
                 unordered_weather_later = {}
 
@@ -82,29 +75,37 @@ class METWeather:
 
                     elif total_minutes_today < int(weather_row['$']):
                         # Weather Later Today
-                        
-                        future_time = "%d-%d" % (int(weather_row['$']) / 60, int(int(weather_row['$']) + 180) / 60)
-                        unordered_weather_later[future_time] = {}
-                        for weather_now_key, weather_now_value in weather_row.iteritems():
-                            unordered_weather_later[future_time][weather_now_key] = weather_now_value
+                        start_hour = ""
+                        end_hour = ""
+                        am_pm = "am"
+                        if int(weather_row['$']) / 60 <= 12:
+                            start_hour = "%d" % (int(weather_row['$']) / 60)
+                        else:
+                             start_hour = "%d" % (int(weather_row['$']) / 60 / 2)
+                             am_pm = "pm"
+                        if (int(int(weather_row['$']) + 180) / 60) <= 12:
+                            end_hour = "%d" % (int(int(weather_row['$']) + 180) / 60)
+                        else:
+                             end_hour = "%d" % (int(int(weather_row['$']) + 180) / 60 / 2)
+                             am_pm = "pm"
 
-                self.result['Weather']['Later'] = sorted(unordered_weather_later.items())
+                        future_time = "%s-%s %s" % (start_hour, end_hour, am_pm)
+                        self.result['Weather']['Later'][future_time] = {}
+                        for weather_now_key, weather_now_value in weather_row.items():
+                            
+                            self.result['Weather']['Later'][future_time][weather_now_key] = weather_now_value
 
             else:
-                for weather_row in sorted(self.temporary_weather['Days'][day.upper()]):
+                for weather_row in self.temporary_weather['Days'][day.upper()]:
                     for weather_day_key, weather_day_value in weather_row.items():
                         if weather_day_key == '$' and weather_day_value == '720':
                             day_name = gettime.convert_zulu_to_dayname(day)
-                            self.result['Weather']['Days'][day_name] = weather_row
+                            self.result['Weather']['Days'][day_name] = weather_row 
 
     def return_error(self, error_message):
         self.result['System']['Success'] = False
         self.result['System']['Error'] = error_message
 
-    def get_time_span(self,dateTime):
-        # todo - cgmorse - returns list [time start, time end]
-        return null
-    
     def format_weather_now(self):
         weather = {}
         for weather_dataKey, weather_dataValue in self.result['Weather']['Now'].items():
@@ -116,6 +117,4 @@ class METWeather:
         return self.result['Weather']['Later']
 
     def format_future_days(self):
-        # nothing to do here, it's all pretty clean
-        # TODO - CGMORSE - need to maintain order, look at using list(OrderedDict.fromkeys(list var)) (although no idea yet how to actually tell it to sort nicely)
         return self.result['Weather']['Days']

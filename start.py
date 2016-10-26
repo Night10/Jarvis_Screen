@@ -150,16 +150,12 @@ while 1:
         if weather_later:
             count = 0
             while (count < weather_later_count):
-                for weather_day_key, weather_day_value in weather_days.items():
-                    weather_later_icons[count] = text.create_weather_text("%s" % (weather_day_value['W']), font_weather_icons, 34, WHITE)
-                    weather_later_temps[count] = text.create_standard_text("%sc" % (weather_day_value['F']), font_standard, 17, WHITE)
-                    weather_later_timeslots[count] = text.create_standard_text("%s" % (weather_day_key), font_standard, 16, WHITE)
+                for weather_later_key, weather_later_value in weather_later.items():
+                    weather_later_icons[count] = text.create_weather_text("%s" % (weather_later_value['W']), font_weather_icons, 34, WHITE)
+                    weather_later_temps[count] = text.create_standard_text("%sc" % (weather_later_value['F']), font_standard, 17, WHITE)
+                    weather_later_timeslots[count] = text.create_standard_text("%s" % (weather_later_key), font_standard, 9, WHITE)
                     count += 1
             
-            future_weather_icon = text.create_weather_text(weather_icons, font_weather_icons, 34, WHITE)
-            future_weather_temp = text.create_standard_text(weather_temps, font_standard, 17, WHITE)
-            future_weather_timeslot = text.create_standard_text(weather_timeslots, font_standard, 16, WHITE)
-
         if len(weather_days) < weather_days_count:
                 weather_days_count = len(weather_days)
         if weather_days:
@@ -184,17 +180,36 @@ while 1:
     screen.blit(weather_icon, (470, 0))
     screen.blit(weather_temperature, (575, 40))
     screen.blit(weather_rain_probability, (580, 85))
+    height_step = 110
     for i in xrange(weather_later_count):
-        screen.blit(weather_later_icons[i], (465 + i * 50, 100))
-        screen.blit(weather_later_temps[i], (468 + i * 50, 145))
-        screen.blit(weather_later_timeslots[i], (470 + i * 50, 170))
-    for i in xrange(weather_days_count):
-        screen.blit(weather_days_icons[i], (465 + i * 50, 210))
-        screen.blit(weather_days_temps[i], (468 + i * 50, 245))
-        screen.blit(weather_days_names[i], (470 + i * 50, 270))
-    screen.blit(house_temperature, (465, 300))
+        icon_left = 25 - (get_width(weather_later_icons[i]) / 2)
+        screen.blit(weather_later_icons[i], (460 + icon_left + i * 50, height_step))
+        
+        temp_left = 25 - (get_width(weather_later_icons[i]) / 2)
+        screen.blit(weather_later_temps[i], (460 + temp_left + (i * 50), height_step + 45))
+        
+        timeslot_left = 25 - (get_width(weather_later_timeslots[i]) / 2)
+        screen.blit(weather_later_timeslots[i], (460 + timeslot_left + (i * 50), height_step + 80))
 
-    # Would be nice to control the visibility of the sys info form the command module
+    if weather_later_count > 0:
+        height_step += 120
+
+    for i in xrange(weather_days_count):
+        icon_left = 25 - (get_width(weather_days_icons[i]) / 2)
+        screen.blit(weather_days_icons[i], (460 + icon_left + i * 50, height_step))
+
+        temp_left = 25 - (get_width(weather_days_icons[i]) / 2)
+        screen.blit(weather_days_temps[i], (460 + temp_left + i * 50, height_step + 45))
+        
+        day_left = 25 - (get_width(weather_days_names[i]) / 2)
+        screen.blit(weather_days_names[i], (460 + day_left + i * 50, height_step + 80))
+
+    if weather_days_count > 0:
+        height_step += 120
+
+    screen.blit(house_temperature, (472, height_step))
+
+    # Would be nice to control the visibility of the sys info from the command module
     screen.blit(screen_size, (0, get_height(screen) - get_height(screen_size)))
     screen.blit(ip, (get_width(screen) - get_width(ip), get_height(screen) - get_height(ip)))
 

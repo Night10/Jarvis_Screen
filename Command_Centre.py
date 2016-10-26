@@ -9,8 +9,15 @@ class Command_Centre:
 
     # Setting an immutable default value
     # http://stackoverflow.com/questions/2681243/how-should-i-declare-default-values-for-instance-variables-in-python
+    
+    # define default command file path
+    default_command_path = 'http://127.0.0.1/command.txt'
+    default_command_url = 'http://127.0.0.1/command.php'
+    
+    #default_command_path = 'http://boncester.serveftp.com/projects/jarvis/command.txt'
+    #default_command_url = 'http://boncester.serveftp.com/projects/jarvis/command.php'
 
-    def __init__(self, command_file_path = "http://boncester.serveftp.com/projects/jarvis/command.txt", command_file_post = "http://boncester.serveftp.com/projects/jarvis/command.php"):
+    def __init__(self, command_file_path = default_command_path, command_file_post = default_command_url):
         self.command_file_path = command_file_path
         self.command_file_post = command_file_post
         self.commands_found = []
