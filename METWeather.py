@@ -24,8 +24,8 @@ class METWeather:
         
     def get_weather(self):
         if (self.weatherLocationName == 'Amesbury'):
-            #weather_url = 'http://boncester.serveftp.com/projects/jarvis/getWeather.php'
-            weather_url = 'http://127.0.0.1/getWeather.php'
+            weather_url = 'http://boncester.serveftp.com/projects/jarvis/getWeather.php'
+            #weather_url = 'http://127.0.0.1/getWeather.php'
         if not weather_url:
             self.return_error("Weather URL is an empty string")
             return false 

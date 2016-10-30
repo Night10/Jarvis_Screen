@@ -69,7 +69,7 @@ weather_types['29'] ='P'
 weather_types['30'] ='O'
 
 # Define Fonts
-font_weather_icons = ['fonts/meteocons-webfont.ttf', 'meteoconsregular']
+font_weather_icons = ['meteocons','meteoconsregular']
 font_standard = ['helveticaneue','texgyreheros']
 
 
@@ -181,36 +181,37 @@ while 1:
     screen.blit(weather_temperature, (575, 40))
     screen.blit(weather_rain_probability, (580, 85))
     height_step = 110
+    weather_left = 460
     for i in xrange(weather_later_count):
         icon_left = 25 - (get_width(weather_later_icons[i]) / 2)
-        screen.blit(weather_later_icons[i], (460 + icon_left + i * 50, height_step))
+        screen.blit(weather_later_icons[i], (weather_left + icon_left + i * 50, height_step))
         
         temp_left = 25 - (get_width(weather_later_icons[i]) / 2)
-        screen.blit(weather_later_temps[i], (460 + temp_left + (i * 50), height_step + 45))
+        screen.blit(weather_later_temps[i], (weather_left + temp_left + (i * 50), height_step + 45))
         
         timeslot_left = 25 - (get_width(weather_later_timeslots[i]) / 2)
-        screen.blit(weather_later_timeslots[i], (460 + timeslot_left + (i * 50), height_step + 80))
+        screen.blit(weather_later_timeslots[i], (weather_left + timeslot_left + (i * 50), height_step + 80))
 
     if weather_later_count > 0:
         height_step += 120
 
     for i in xrange(weather_days_count):
         icon_left = 25 - (get_width(weather_days_icons[i]) / 2)
-        screen.blit(weather_days_icons[i], (460 + icon_left + i * 50, height_step))
+        screen.blit(weather_days_icons[i], (weather_left + icon_left + i * 50, height_step))
 
         temp_left = 25 - (get_width(weather_days_icons[i]) / 2)
-        screen.blit(weather_days_temps[i], (460 + temp_left + i * 50, height_step + 45))
+        screen.blit(weather_days_temps[i], (weather_left + temp_left + i * 50, height_step + 45))
         
         day_left = 25 - (get_width(weather_days_names[i]) / 2)
-        screen.blit(weather_days_names[i], (460 + day_left + i * 50, height_step + 80))
+        screen.blit(weather_days_names[i], (weather_left + day_left + i * 50, height_step + 80))
 
     if weather_days_count > 0:
         height_step += 120
 
-    screen.blit(house_temperature, (472, height_step))
+    screen.blit(house_temperature, (weather_left + 12, height_step))
 
     # Would be nice to control the visibility of the sys info from the command module
-    screen.blit(screen_size, (0, get_height(screen) - get_height(screen_size)))
-    screen.blit(ip, (get_width(screen) - get_width(ip), get_height(screen) - get_height(ip)))
+    screen.blit(screen_size, (0, get_height(screen) - get_height(screen_size) - 20))
+    screen.blit(ip, (get_width(screen) - get_width(ip), get_height(screen) - get_height(ip) - 20))
 
     pygame.display.flip()
