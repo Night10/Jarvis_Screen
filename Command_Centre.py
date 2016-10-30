@@ -48,7 +48,7 @@ class Command_Centre:
                     self.restart()
                 if search_command == 'refreshweather':
                     self.refresh_weather()
-            return self.commands
+        return self.commands
 
     def restart(self):
         if platform.system() == 'Linux':
