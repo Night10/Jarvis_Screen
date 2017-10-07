@@ -78,16 +78,13 @@ def get_screen_height():
     x, y = screen.get_size()
     return y
 
-
 def get_width(this):
     x, y = this.get_size()
     return x
 
-
 def get_height(this):
     x, y = this.get_size()
     return y
-
 
 def get_screen_width():
     x, y = screen.get_size()
