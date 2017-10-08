@@ -3,7 +3,7 @@ from urllib.parse import urlencode
 import platform
 
 
-class Command_Centre:
+class command_centre:
     # describes the type
     typeDescription = 'Runs a command if one is present within a text file'
 

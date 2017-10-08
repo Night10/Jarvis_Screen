@@ -1,7 +1,7 @@
 import urllib.request, urllib.parse, urllib.error, json, time, gettime, collections, gettime
 from urllib.request import urlopen
 
-class METWeather:
+class met_weather:
     # describes the type
     typeDescription = 'Gets the Weather from the MET Office with the location name'
 

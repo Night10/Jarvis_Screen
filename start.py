@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
-import time, pygame, gettime, getip, METWeather, Timecycle, Command_Centre, text_generator as text
+import time, pygame, gettime, getip, met_weather, timecycle as timecycle
+import command_centre as command_centre, text_generator as text
 
 # METWeather
-knowledge_METWeather = METWeather.METWeather()
+knowledge_METWeather = met_weather.met_weather()
 
 # Timecycle for METWeather
-metWeatherTimecycle = Timecycle.Timecycle()
+metWeatherTimecycle = timecycle.timecycle()
 metWeatherTimecycle.force_alarm = True
 
 # System Commands
-commands = Command_Centre.Command_Centre()
+commands = command_centre.command_centre()
 
 pygame.init()
 screen = pygame.display.set_mode((656, 416))

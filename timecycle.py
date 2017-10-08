@@ -3,7 +3,7 @@ from datetime import timedelta
 import time
 
 
-class Timecycle:
+class timecycle:
     # describes the type
     typeDescription = 'Creates a timeable instance we can use for timing cycles of things'
 
