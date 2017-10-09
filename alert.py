@@ -1,48 +1,67 @@
-import timecycle as timecycle
 from datetime import datetime
 from datetime import timedelta
 
 
-class Alert:
-    # describes the type
+class alert:
+    """ For managing alerts """
     typeDescription = 'Handles and manages alerts'
 
     def __init__(self):
         self.alert_messages = []
-        self.default_timeout = 5  # minutes
         self.active_message = -1
-        self.timecycle = timecycle.timecycle()
-        self.timecycle.wait_time = 1
-
-    # TODO - CGMORSE - Messages should have a default timout
-    #                - that removes them from the collection (using Timecycle)
-
-    # TODO - CGMORSE - The caller should be able to override
-    #                -  the default timout of a given message
+        self.message_timeout = 5  # minutes
 
     def change_message(self):
-        # TODO - CGMORSE - this needs to account for current message timout
-        if self.alert_messages.count > -1 and self.timecycle.is_alarming():
-            if self.active_message < self.alert_messages.count:
-                self.active_message += 1
+        """ Sets the active message """
+        self.remove_messages()
+        alert_messages_length = len(self.alert_messages)
+        if alert_messages_length > 0:
+            if self.active_message < alert_messages_length - 1:
+                self.active_message = self.active_message + 1
             else:
                 self.active_message = 0
-        self.timecycle.reset_alarm()
+
         return self.active_message
 
+    def remove_messages(self):
+        """ Removes messages that have expired """
+        if len(self.alert_messages) > -1:
+            cleared_messages = []
+            now_in_seconds = datetime.now().strftime("%s")
+            for message in self.alert_messages:
+                if message[0]['timeout'].strftime("%s") >= now_in_seconds:
+                    cleared_messages.append(message)
+            del self.alert_messages[:]
+            self.alert_messages = cleared_messages
+
     def add_message(self, message, timeout):
+        """ Adds  a message to the collection """
         if timeout is None:
-            timeout = self.default_timout
-        
+            timeout = datetime.now() + timedelta(minutes=self.message_timeout)
+        else:
+            timeout = datetime.now() + timedelta(minutes=timeout)
         if message is None:
             return False
         
-        self.alert_messages.append({'message' : message, 'timeout' : timout})
+        self.alert_messages.append([{'message': message, 'timeout': timeout}])
+
         return True
 
-    def get_messages(self):
-        message = self.change_message()
+    def get_message(self):
+        """ Gets the message to be returned """
+        self.change_message()
         if self.active_message > -1:
-            return self.alert_messages[message]
+            return self.alert_messages[self.active_message]
         else:
-            return ""
+            return None
+
+# TODO - CGMORSE - Testing only, remove when implementation complete
+alert = alert()
+alert.add_message('dave stewart', 5)
+alert.add_message('is a hacker', 12)
+message = alert.get_message()
+print(message[0]['message'])
+message = alert.get_message()
+print(message[0]['message'])
+message = alert.get_message()
+print(message[0]['message'])

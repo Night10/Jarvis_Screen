@@ -8,7 +8,7 @@ class met_weather:
     # Setting an immutable default value
     # http://stackoverflow.com/questions/2681243/how-should-i-declare-default-values-for-instance-variables-in-python
 
-    def __init__(self, weatherLocationName='Amesbury'):
+    def __init__(self, alert, weatherLocationName='Amesbury'):
         self.last_collected = gettime.get_time_now()
         self.weatherLocationName = weatherLocationName
         self.result = {'System': {}, 'Weather': {}}
@@ -18,6 +18,7 @@ class met_weather:
         self.result['Weather']['Later'] = collections.OrderedDict()
         self.result['Weather']['Days'] = collections.OrderedDict()
         self.temporary_weather = {}
+        self.alert = alert
 
         # Get the main weather
         self.get_weather()
@@ -30,19 +31,24 @@ class met_weather:
             self.return_error("Weather URL is an empty string")
             return False 
 
-        response = urlopen(weather_url)
-        data = response.read().decode("utf-8")
-        weather_data = json.loads(data)
+        try:
+            response = urlopen(weather_url)
+        except urllib2.URLError:
+            # TODO - CGMORSE - need to pass a message back to the caller's alert messages
+            alert.add_message("Connection issue at: " + gettime.get_time_now(), 30)
+        else:
+            data = response.read().decode("utf-8")
+            weather_data = json.loads(data)
 
-        for weather_dataKey, weather_dataValue in list(weather_data.items()):
-            if weather_dataKey == "System":
-                for systemKey, systemValue in list(weather_dataValue.items()):
-                    self.result['System'][systemKey] = systemValue
+            for weather_dataKey, weather_dataValue in list(weather_data.items()):
+                if weather_dataKey == "System":
+                    for systemKey, systemValue in list(weather_dataValue.items()):
+                        self.result['System'][systemKey] = systemValue
 
-            elif weather_dataKey == "Weather":
-                for weatherKey, weatherValue in list(weather_dataValue.items()):
-                    self.temporary_weather[weatherKey] = weatherValue
-        self.last_collected = gettime.get_time_now()
+                elif weather_dataKey == "Weather":
+                    for weatherKey, weatherValue in list(weather_dataValue.items()):
+                        self.temporary_weather[weatherKey] = weatherValue
+            self.last_collected = gettime.get_time_now()
 
     def show_days(self):
         if not self.temporary_weather:
