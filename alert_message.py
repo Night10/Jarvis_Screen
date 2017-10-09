@@ -55,13 +55,13 @@ class alert_message:
         else:
             return None
 
-# TODO - CGMORSE - Testing only, remove when implementation complete
-alert = alert()
-alert.add_message('dave stewart', 5)
-alert.add_message('is a hacker', 12)
-message = alert.get_message()
-print(message[0]['message'])
-message = alert.get_message()
-print(message[0]['message'])
-message = alert.get_message()
-print(message[0]['message'])
+# # TODO - CGMORSE - Testing only, remove when implementation complete
+# alert_message = alert_message()
+# alert_message.add_message('dave stewart', 5)
+# alert_message.add_message('is a hacker', 12)
+# message = alert_message.get_message()
+# print(message[0]['message'])
+# message = alert_message.get_message()
+# print(message[0]['message'])
+# message = alert_message.get_message()
+# print(message[0]['message'])
