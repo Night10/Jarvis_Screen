@@ -2,7 +2,7 @@ from datetime import datetime
 from datetime import timedelta
 
 
-class alert:
+class alert_message:
     """ For managing alerts """
     typeDescription = 'Handles and manages alerts'
 

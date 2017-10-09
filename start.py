@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-import time, pygame, gettime, getip, met_weather, timecycle as timecycle, alert
+import time, pygame, gettime, getip, met_weather, timecycle as timecycle, alert_messages
 import command_centre as command_centre, text_generator as text
 
 # alert messaging
-alert = alert.alert()
+alert_messages = alert_messages.alert_messages()
 
 # met_Weather - passing in alert 
 knowledge_METWeather = met_weather.met_weather(alert)
