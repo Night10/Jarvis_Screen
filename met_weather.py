@@ -8,7 +8,7 @@ class met_weather:
     # Setting an immutable default value
     # http://stackoverflow.com/questions/2681243/how-should-i-declare-default-values-for-instance-variables-in-python
 
-    def __init__(self, alert, weatherLocationName='Amesbury'):
+    def __init__(self, alert_message, weatherLocationName='Amesbury'):
         self.last_collected = gettime.get_time_now()
         self.weatherLocationName = weatherLocationName
         self.result = {'System': {}, 'Weather': {}}
@@ -18,7 +18,7 @@ class met_weather:
         self.result['Weather']['Later'] = collections.OrderedDict()
         self.result['Weather']['Days'] = collections.OrderedDict()
         self.temporary_weather = {}
-        self.alert = alert
+        self.alert_message = alert_message
 
         # Get the main weather
         self.get_weather()
@@ -33,9 +33,8 @@ class met_weather:
 
         try:
             response = urlopen(weather_url)
-        except urllib2.URLError:
-            # TODO - CGMORSE - need to pass a message back to the caller's alert messages
-            alert.add_message("Connection issue at: " + gettime.get_time_now(), 30)
+        except urllib.URLError:
+            self.alert_message.add_message("Connection issue at: " + gettime.get_time_now(), 30)
         else:
             data = response.read().decode("utf-8")
             weather_data = json.loads(data)
@@ -49,6 +48,7 @@ class met_weather:
                     for weatherKey, weatherValue in list(weather_dataValue.items()):
                         self.temporary_weather[weatherKey] = weatherValue
             self.last_collected = gettime.get_time_now()
+            self.alert_message.add_message("MET at: " + gettime.get_time_now(), 30)
 
     def show_days(self):
         if not self.temporary_weather:

@@ -95,7 +95,7 @@ def get_screen_width():
     return x
 
 
-def get_weather(weather_icon_data, weather_temperature_data, weather_rain_probability_data, house_temperature_data, weather_later, weather_days):
+def get_weather(weather_icon_data, weather_temperature_data, weather_rain_probability_data, house_temperature_data, weather_later, weather_days, alert_message):
     weather_now = False
     weather_later = False
     weather_days = False
@@ -115,7 +115,7 @@ def get_weather(weather_icon_data, weather_temperature_data, weather_rain_probab
         weather_rain_probability_data = weather_now['Pp']
         house_temperature_data = "temp/hum data"
 
-    return (weather_icon_data, weather_temperature_data, weather_rain_probability_data, house_temperature_data, weather_later, weather_days)
+    return (weather_icon_data, weather_temperature_data, weather_rain_probability_data, house_temperature_data, weather_later, weather_days, alert_message)
 
 
 # disable mouse cursor
@@ -155,7 +155,7 @@ while 1:
 
     
 
-    (weather_icon_data, weather_temperature_data, weather_rain_probability_data, house_temperature_data, weather_later, weather_days) = get_weather(weather_icon_data, weather_temperature_data, weather_rain_probability_data, house_temperature_data, weather_later, weather_days)
+    (weather_icon_data, weather_temperature_data, weather_rain_probability_data, house_temperature_data, weather_later, weather_days, alert_message) = get_weather(weather_icon_data, weather_temperature_data, weather_rain_probability_data, house_temperature_data, weather_later, weather_days, alert_message)
     initial_run = False
     
     # Set up text placeholders
@@ -192,8 +192,8 @@ while 1:
 
     if weather_later_icons:
         
-        # House Temperature
-        house_temperature = text.create_standard_text("unimplemented", font_standard, 20, WHITE)
+        # Alert message
+        house_temperature = text.create_standard_text(alert_message.get_message(), font_standard, 20, WHITE)
         # System Infomation
         ip = text.create_standard_text(getip.get_ip_address(), font_standard, 12, WHITE)
         screen_size = text.create_standard_text("X:%spx / Y:%spx" % screen.get_size(), font_standard, 12, WHITE)
