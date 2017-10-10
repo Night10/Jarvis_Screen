@@ -9,8 +9,8 @@ class timecycle:
     def __init__(self):
         self.wait_time = 15
         self.alarm_start = datetime.now()
-        self.wait_time = timedelta(minutes=self.wait_time)
-        self.alarm_time = self.alarm_start + self.wait_time
+        self.wait_time_delta = timedelta(minutes=self.wait_time)
+        self.alarm_time = self.alarm_start + self.wait_time_delta
         self.force_alarm = False
 
     def reset_alarm(self):
@@ -18,7 +18,7 @@ class timecycle:
 
     def is_alarming(self):
         now = datetime.now().strftime("%s")
-        alarm_time = self.alarm_time.strftime("%s")
+        alarm_time = self.alarm_time_delta.strftime("%s")
         if now > alarm_time or self.force_alarm:
             self.reset_alarm()
             return True
