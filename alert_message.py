@@ -50,18 +50,8 @@ class alert_message:
     def get_message(self):
         """ Gets the message to be returned """
         self.change_message()
-        if self.active_message > -1:
-            return self.alert_messages[self.active_message]
+        if len(self.alert_messages) > 0 and self.active_message > -1:
+            message = self.alert_messages[self.active_message]
+            return message[0]['message']
         else:
-            return None
-
-# # TODO - CGMORSE - Testing only, remove when implementation complete
-# alert_message = alert_message()
-# alert_message.add_message('dave stewart', 5)
-# alert_message.add_message('is a hacker', 12)
-# message = alert_message.get_message()
-# print(message[0]['message'])
-# message = alert_message.get_message()
-# print(message[0]['message'])
-# message = alert_message.get_message()
-# print(message[0]['message'])
+            return ""
