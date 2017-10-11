@@ -21,9 +21,7 @@ class timecycle:
 
     def is_alarming(self):
         now = datetime.now().strftime("%s")
-        print("now = " + now)
         alarm_time = self.alarm_time.strftime("%s")
-        print("alarm time = " + alarm_time)
         if now > alarm_time or self.force_alarm:
             self.reset_alarm()
             return True

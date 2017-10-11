@@ -34,7 +34,7 @@ class met_weather:
         try:
             response = urlopen(weather_url)
         except urllib.URLError:
-            self.alert_message.add_message("Connection issue at: " + gettime.get_time_now(), 30)
+            self.alert_message.add_message("Connection issue at: " + gettime.get_time_now(), 15)
         else:
             data = response.read().decode("utf-8")
             weather_data = json.loads(data)
@@ -48,7 +48,7 @@ class met_weather:
                     for weatherKey, weatherValue in list(weather_dataValue.items()):
                         self.temporary_weather[weatherKey] = weatherValue
             self.last_collected = gettime.get_time_now()
-            self.alert_message.add_message("MET at: " + self.last_collected, 30)
+            self.alert_message.add_message("MET at: " + self.last_collected, 15)
 
     def show_days(self):
         if not self.temporary_weather:

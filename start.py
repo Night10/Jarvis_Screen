@@ -100,13 +100,12 @@ def get_weather(weather_icon_data, weather_temperature_data, weather_rain_probab
     weather_later = False
     weather_days = False
 
-    if(metWeatherTimecycle.is_alarming):
-        knowledge_METWeather.get_weather_now()
-        # Format the now weather to something nice
-        weather_now = knowledge_METWeather.format_weather_now()
-        weather_later = knowledge_METWeather.format_weather_later()
-        weather_days = knowledge_METWeather.format_future_days()
-        metWeatherTimecycle.reset_alarm()
+    knowledge_METWeather.get_weather_now()
+    # Format the now weather to something nice
+    weather_now = knowledge_METWeather.format_weather_now()
+    weather_later = knowledge_METWeather.format_weather_later()
+    weather_days = knowledge_METWeather.format_future_days()
+    metWeatherTimecycle.reset_alarm()
 
     # Breakout the data to individual rows
     if weather_now:
@@ -138,6 +137,10 @@ for i in range(0, 4):
     weather_later_temps[i] = text.create_standard_text("", font_standard, 17, WHITE)
     weather_later_timeslots[i] = text.create_standard_text("", font_standard, 9, WHITE)
 
+# Add message to show (for a minute) that the application has started
+#  and at what time (this will be added to the message queue)
+alert_message.add_message("Started at " + gettime.get_time_now(), 1)
+
 while 1:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -155,10 +158,10 @@ while 1:
 
     
     if metWeatherTimecycle.is_alarming():
+        # TODO - Now the bloody weather isnt showing on the screen!?!
         knowledge_METWeather.get_weather()
 
     (weather_icon_data, weather_temperature_data, weather_rain_probability_data, house_temperature_data, weather_later, weather_days, alert_message) = get_weather(weather_icon_data, weather_temperature_data, weather_rain_probability_data, house_temperature_data, weather_later, weather_days, alert_message)
-    initial_run = False
 
     # Set up text placeholders
     weather_icon = text.create_weather_text("", font_weather_icons, 100, WHITE)
@@ -240,4 +243,4 @@ while 1:
 
     # sleep now, only dreams (for a second)
     pygame.display.flip()
-    time.sleep(10)
+    time.sleep(2)
