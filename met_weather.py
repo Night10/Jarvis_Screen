@@ -48,7 +48,7 @@ class met_weather:
                     for weatherKey, weatherValue in list(weather_dataValue.items()):
                         self.temporary_weather[weatherKey] = weatherValue
             self.last_collected = gettime.get_time_now()
-            self.alert_message.add_message("MET at: " + gettime.get_time_now(), 30)
+            self.alert_message.add_message("MET at: " + self.last_collected, 30)
 
     def show_days(self):
         if not self.temporary_weather:

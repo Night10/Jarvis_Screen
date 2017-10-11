@@ -154,10 +154,12 @@ while 1:
     current_date = text.create_standard_text(gettime.get_date_now(), font_standard, 39, WHITE)
 
     
+    if metWeatherTimecycle.is_alarming():
+        knowledge_METWeather.get_weather()
 
     (weather_icon_data, weather_temperature_data, weather_rain_probability_data, house_temperature_data, weather_later, weather_days, alert_message) = get_weather(weather_icon_data, weather_temperature_data, weather_rain_probability_data, house_temperature_data, weather_later, weather_days, alert_message)
     initial_run = False
-    
+
     # Set up text placeholders
     weather_icon = text.create_weather_text("", font_weather_icons, 100, WHITE)
     weather_temperature = text.create_standard_text("", font_standard, 40, WHITE)
@@ -238,4 +240,4 @@ while 1:
 
     # sleep now, only dreams (for a second)
     pygame.display.flip()
-    time.sleep(30)
+    time.sleep(10)
