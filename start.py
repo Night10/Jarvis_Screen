@@ -105,7 +105,6 @@ def get_weather(weather_icon_data, weather_temperature_data, weather_rain_probab
     weather_now = knowledge_METWeather.format_weather_now()
     weather_later = knowledge_METWeather.format_weather_later()
     weather_days = knowledge_METWeather.format_future_days()
-    metWeatherTimecycle.reset_alarm()
 
     # Breakout the data to individual rows
     if weather_now:
@@ -147,7 +146,8 @@ while 1:
             exit()
 
     # Check System Commands
-    commands.check_command_and_run()
+    # TODO - far too chatty, should be placed in a timecycle
+    #commands.check_command_and_run()
     
     # clear screen
     screen.fill(BLACK)
@@ -160,6 +160,7 @@ while 1:
     if metWeatherTimecycle.is_alarming():
         # TODO - Now the bloody weather isnt showing on the screen!?!
         knowledge_METWeather.get_weather()
+        metWeatherTimecycle.reset_alarm()
 
     (weather_icon_data, weather_temperature_data, weather_rain_probability_data, house_temperature_data, weather_later, weather_days, alert_message) = get_weather(weather_icon_data, weather_temperature_data, weather_rain_probability_data, house_temperature_data, weather_later, weather_days, alert_message)
 
