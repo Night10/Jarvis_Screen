@@ -1,11 +1,3 @@
-#import RPi.GPIO as GPIO
-
-# Sets the GPIO numbering to PI GPIO recognisable numbering
-#GPIO.setmode(GPIO.BOARD)
-
-# Assign the DHT module to pin 6
-#GPIO.setup(channel, GPIO.IN)
-
 import Adafruit_DHT
 sensor = Adafruit_DHT.DHT11
 pin = 6
