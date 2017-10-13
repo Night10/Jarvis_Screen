@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 
+
 class pir_sensor:
     # describes the type
     typeDescription = 'PIR Sensor'
@@ -9,9 +10,6 @@ class pir_sensor:
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.sensor_input_pin, GPIO.IN)
 
-        # GPIO.setmode(GPIO.BCM)
-        # PIR_PIN = 7
-        # GPIO.setup(PIR_PIN, GPIO.IN)
     def get_reading(self):
         if GPIO.input(self.sensor_input_pin):
             return True
