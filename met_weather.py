@@ -33,8 +33,8 @@ class met_weather:
 
         try:
             response = urlopen(weather_url)
-        except urllib.URLError:
-            self.alert_message.add_message("Connection issue at: " + gettime.get_time_now(), 15)
+        except except urllib.error.URLError as e:
+            self.alert_message.add_message("Error of: " + r.reason + " at: " + gettime.get_time_now(), 15)
         else:
             data = response.read().decode("utf-8")
             weather_data = json.loads(data)
