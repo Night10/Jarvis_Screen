@@ -1,0 +1,16 @@
+#!/bin/bash
+##############################################
+##                                          ##
+##  Jarvis Screen                           ##
+##  Launches start.py                       ##
+##  Best autostarted through ~/.profile     ##
+##                                          ##
+##############################################
+
+
+export FRAMEBUFFER=/dev/fb1
+export MENUDIR="/home/pi/Development/Sources/Jarvis_Screen/"
+startpage="start.py"
+/usr/bin/clear
+
+/usr/bin/env python3.5 $MENUDIR$startpage
