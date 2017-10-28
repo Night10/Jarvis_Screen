@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 # -*- coding: utf-8 -*-
 import time, pygame, gettime, getip, met_weather, timecycle as timecycle
 import alert_message, command_centre as command_centre, text_generator as text
