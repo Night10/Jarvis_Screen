@@ -27,3 +27,11 @@ class timecycle:
             return True
         else:
             return False
+
+    def is_alarming_manually_reset(self):
+        now = datetime.now().strftime("%s")
+        alarm_time = self.alarm_time.strftime("%s")
+        if now > alarm_time or self.force_alarm:
+            return True
+        else:
+            return False
