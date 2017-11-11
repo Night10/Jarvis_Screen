@@ -160,7 +160,6 @@ while 1:
 
     
     if metWeatherTimecycle.is_alarming():
-        # TODO - Now the bloody weather isnt showing on the screen!?!
         knowledge_METWeather.get_weather()
         metWeatherTimecycle.reset_alarm()
 
@@ -203,7 +202,8 @@ while 1:
         # Alert message
         house_temperature = text.create_standard_text(alert_message.get_message(), font_standard, 20, WHITE)
         # System Infomation
-        ip = text.create_standard_text(getip.get_ip_address(), font_standard, 12, WHITE)
+        # TODO - getip() isnt safe, errors on lack of connections
+        ip = text.create_standard_text("removed get ip, font_standard, 12, WHITE)
         screen_size = text.create_standard_text("X:%spx / Y:%spx" % screen.get_size(), font_standard, 12, WHITE)
         screen.blit(current_time, (0, -17))
         screen.blit(current_date, (0, 100))
