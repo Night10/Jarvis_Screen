@@ -117,6 +117,19 @@ def get_weather(weather_icon_data, weather_temperature_data, weather_rain_probab
 
     return (weather_icon_data, weather_temperature_data, weather_rain_probability_data, house_temperature_data, weather_later, weather_days, alert_message)
 
+# TODO - discretely generate the weather information font items
+#def generateWeatherInfo():
+
+# TODO - discretely generate the time and date font items
+#def generateTimeInfo():
+
+# TODO - discretely generate the messages font items
+#def generateMessages():
+
+# TODO - discretely generate the main panel items
+#def generateMainPanel():
+
+########################### RENDER START
 
 # disable mouse cursor
 pygame.mouse.set_visible(0)

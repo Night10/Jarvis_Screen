@@ -53,7 +53,6 @@ class dht_package:
                 print("something went wrong sending the data to Jarvis Brain")
                 return False
 
-
     def collect_readings(self, location):
         if location is not None:
             raw_collection = requests.get(self.jarvis_brain_endpoint + self.jarvis_brain_collect_dht + location)
